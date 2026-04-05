@@ -58,8 +58,10 @@ export const Profile = () => {
   };
 
   const handleLogout = async () => {
-    await signOut();
-    navigate('/', { replace: true });
+    if (window.confirm("Are you sure you want to log out?")) {
+      await signOut();
+      navigate('/', { replace: true });
+    }
   };
 
   const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
@@ -75,9 +77,10 @@ export const Profile = () => {
   }
 
   return (
-    <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', background: 'var(--bg-color)' }}>
+      <div style={{ padding: '24px', width: '100%', maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
-      {/* Profile Header */}
+        {/* Profile Header */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', paddingTop: '16px' }}>
         {avatarUrl ? (
           <img
@@ -158,7 +161,8 @@ export const Profile = () => {
       >
         <LogOut size={20} />
         Sign Out
-      </button>
+        </button>
+      </div>
     </div>
   );
 };

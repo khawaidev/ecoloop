@@ -111,6 +111,8 @@ export const Onboarding = () => {
       width: '100%',
       padding: '48px 24px 40px',
     }}>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      
       {/* Header */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <span style={{ fontSize: '30px', fontWeight: 700, color: 'var(--primary)' }}>ecoloop</span>

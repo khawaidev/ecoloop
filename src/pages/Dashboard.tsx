@@ -10,8 +10,8 @@ const QRCode = (QRCodeDefault as any).default || QRCodeDefault;
 
 const MISSIONS_POOL = [
   { name: 'Collect 10 Plastic Items', description: 'Head out to your local park or street and pick up discarded plastic wrappers and bottles.', target: 10 },
-  { name: 'Clean a Small Area', description: 'Find a visibly polluted spot near you and clean up all the plastic you can see.', target: 5 },
-  { name: 'Pick Up Plastic Bottles', description: 'Focus on collecting discarded plastic bottles from your neighbourhood.', target: 8 },
+  { name: 'Clean a 50 sqm Area', description: 'Find a visibly polluted spot near you and clean up all the plastic you can see.', target: 50 },
+  { name: 'Walk 2 km collecting plastic', description: 'Focus on collecting discarded plastic bottles from your neighbourhood while walking.', target: 2 },
 ];
 
 export const Dashboard = () => {
@@ -19,11 +19,10 @@ export const Dashboard = () => {
   const { user } = useAuth();
 
   const [profile, setProfile] = useState<any>(null);
-  const [stats, setStats] = useState({ totalItems: 0, totalWeight: 0, totalActivities: 0 });
+  const [stats, setStats] = useState({ totalItems: 0, totalWeight: 0, totalActivities: 0, totalDistance: 0, totalArea: 0 });
   const [mission, setMission] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
-  const [sessionUrl, setSessionUrl] = useState('');
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
@@ -54,20 +53,23 @@ export const Dashboard = () => {
       setProfile(profileData);
     }
 
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-      setSessionUrl(`${window.location.origin}/#access_token=${session.access_token}&refresh_token=${session.refresh_token}&type=recovery`);
-    }
-
     const { data: activities } = await supabase
       .from('activities')
-      .select('plastic_count, weight_kg')
+      .select('plastic_count, weight_kg, distance_km, area_covered_sqm')
       .eq('user_id', user.id);
 
     if (activities && activities.length > 0) {
       const totalItems = activities.reduce((sum: number, a: any) => sum + (a.plastic_count || 0), 0);
       const totalWeight = activities.reduce((sum: number, a: any) => sum + (a.weight_kg || 0), 0);
-      setStats({ totalItems, totalWeight: parseFloat(totalWeight.toFixed(2)), totalActivities: activities.length });
+      const totalDistance = activities.reduce((sum: number, a: any) => sum + (a.distance_km || 0), 0);
+      const totalArea = activities.reduce((sum: number, a: any) => sum + (a.area_covered_sqm || 0), 0);
+      setStats({ 
+        totalItems, 
+        totalWeight: parseFloat(totalWeight.toFixed(2)), 
+        totalActivities: activities.length,
+        totalDistance: parseFloat(totalDistance.toFixed(2)),
+        totalArea: parseFloat(totalArea.toFixed(1))
+      });
     }
 
     const { data: missionData } = await supabase
@@ -170,7 +172,7 @@ export const Dashboard = () => {
               {isDesktop ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px', background: 'white', padding: '16px', borderRadius: '16px', color: 'var(--text-main)' }}>
                   <div style={{ background: 'white', padding: '8px', borderRadius: '12px' }}>
-                    <QRCode value={sessionUrl || window.location.origin} size={100} />
+                    <QRCode value={`${window.location.origin}/auth`} size={100} level="M" />
                   </div>
                   <div style={{ flex: 1 }}>
                     <h3 style={{ fontSize: '16px', margin: '0 0 4px', display: 'flex', alignItems: 'center', gap: '6px' }}><Smartphone size={18} color="var(--primary)" /> Scan to Start</h3>
@@ -216,6 +218,14 @@ export const Dashboard = () => {
             <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Weight (kg)</span>
               <span style={{ fontSize: '36px', fontWeight: 700, color: 'var(--primary)' }}>{stats.totalWeight}</span>
+            </div>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Distance (km)</span>
+              <span style={{ fontSize: '36px', fontWeight: 700, color: 'var(--primary)' }}>{stats.totalDistance}</span>
+            </div>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Area (m&sup2;)</span>
+              <span style={{ fontSize: '36px', fontWeight: 700, color: 'var(--primary)' }}>{stats.totalArea}</span>
             </div>
           </div>
 

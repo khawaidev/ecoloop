@@ -280,7 +280,15 @@ export const Mission = () => {
         .order('created_at', { ascending: false }).limit(1).single();
 
       if (activeMission) {
-        const newCount = activeMission.current_count + result.count;
+        let increment = result.count;
+        const mName = activeMission.mission_name.toLowerCase();
+        if (mName.includes('area') || mName.includes('sqm')) {
+          increment = parseFloat((totalDistance * 10).toFixed(1));
+        } else if (mName.includes('km') || mName.includes('walk')) {
+          increment = parseFloat(totalDistance.toFixed(3));
+        }
+
+        const newCount = activeMission.current_count + increment;
         const done = newCount >= activeMission.target_count;
         await supabase.from('missions').update({
           current_count: newCount,
