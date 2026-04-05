@@ -11,6 +11,7 @@ import { CameraView } from './pages/CameraView';
 import { Mission } from './pages/Mission';
 import { Results } from './pages/Results';
 import { CoveredAreas } from './pages/CoveredAreas';
+import { LoginTransfer } from './pages/LoginTransfer';
 
 // Mobile Layout Component Wrapper
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -115,6 +116,7 @@ function App() {
             {/* Public Flows */}
             <Route path="/" element={<BasicLayout><Landing /></BasicLayout>} />
             <Route path="/auth" element={<BasicLayout><Auth /></BasicLayout>} />
+            <Route path="/login" element={<BasicLayout><LoginTransfer /></BasicLayout>} />
 
             {/* Onboarding Flow (Needs Auth but no bottom nav bar) */}
             <Route path="/onboarding" element={<AuthOnlyRoute><Onboarding /></AuthOnlyRoute>} />

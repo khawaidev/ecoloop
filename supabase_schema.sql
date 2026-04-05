@@ -86,3 +86,29 @@ create policy "Users can insert own missions."
   on missions for insert with check ( auth.uid() = user_id );
 create policy "Users can update own missions."
   on missions for update using ( auth.uid() = user_id );
+
+
+-- 4. Session Transfers table (for QR code auto-login)
+create table if not exists public.session_transfers (
+  code text primary key,
+  access_token text not null,
+  refresh_token text not null,
+  created_at timestamp with time zone default now()
+);
+
+alter table public.session_transfers enable row level security;
+
+-- Allow anyone to read (the phone needs to fetch without auth)
+drop policy if exists "Anyone can read session transfers." on session_transfers;
+create policy "Anyone can read session transfers."
+  on session_transfers for select using ( true );
+
+-- Allow authenticated users to insert
+drop policy if exists "Authenticated users can insert session transfers." on session_transfers;
+create policy "Authenticated users can insert session transfers."
+  on session_transfers for insert with check ( true );
+
+-- Allow anyone to delete (cleanup after use)
+drop policy if exists "Anyone can delete session transfers." on session_transfers;
+create policy "Anyone can delete session transfers."
+  on session_transfers for delete using ( true );

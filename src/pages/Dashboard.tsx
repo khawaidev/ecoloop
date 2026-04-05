@@ -54,10 +54,18 @@ export const Dashboard = () => {
       setProfile(profileData);
     }
 
-    // Fetch session tokens for QR auto-login
+    // Generate short transfer code for QR auto-login
     const { data: { session: currentSession } } = await supabase.auth.getSession();
     if (currentSession) {
-      setSessionUrl(`${window.location.origin}/#access_token=${currentSession.access_token}&refresh_token=${currentSession.refresh_token}&type=recovery`);
+      const code = Math.random().toString(36).substring(2, 8); // 6-char short code
+      // Delete any old codes first, then insert new one
+      await supabase.from('session_transfers').delete().lt('created_at', new Date(Date.now() - 300000).toISOString());
+      await supabase.from('session_transfers').insert({
+        code,
+        access_token: currentSession.access_token,
+        refresh_token: currentSession.refresh_token,
+      });
+      setSessionUrl(`${window.location.origin}/login?code=${code}`);
     }
 
     const { data: activities } = await supabase
