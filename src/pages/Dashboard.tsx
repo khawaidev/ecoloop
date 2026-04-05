@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { Award, Recycle, ArrowRight, Smartphone } from 'lucide-react';
-import QRCode from 'react-qr-code';
+import QRCodeDefault from 'react-qr-code';
+
+// Safely extract the default export for ESM/CJS interop in Vite minified builds
+const QRCode = (QRCodeDefault as any).default || QRCodeDefault;
 
 const MISSIONS_POOL = [
   { name: 'Collect 10 Plastic Items', description: 'Head out to your local park or street and pick up discarded plastic wrappers and bottles.', target: 10 },
