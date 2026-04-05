@@ -13,6 +13,10 @@ create table if not exists public.profiles (
   updated_at timestamp with time zone default now()
 );
 
+-- Force add columns if the table already existed from an older version
+alter table public.profiles add column if not exists location_name text;
+alter table public.profiles add column if not exists avatar_url text;
+
 alter table public.profiles enable row level security;
 
 -- Drop existing policies first to avoid conflicts
