@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { Award, Recycle, ArrowRight, Smartphone } from 'lucide-react';
-import QRCodeDefault from 'react-qr-code';
-
-// Safely extract the default export for ESM/CJS interop in Vite minified builds
-const QRCode = (QRCodeDefault as any).default || QRCodeDefault;
 
 const MISSIONS_POOL = [
   { name: 'Collect 10 Plastic Items', description: 'Head out to your local park or street and pick up discarded plastic wrappers and bottles.', target: 10 },
@@ -23,7 +19,6 @@ export const Dashboard = () => {
   const [mission, setMission] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
-  const [sessionUrl, setSessionUrl] = useState('');
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
@@ -52,20 +47,6 @@ export const Dashboard = () => {
       
     if (profileData) {
       setProfile(profileData);
-    }
-
-    // Generate short transfer code for QR auto-login
-    const { data: { session: currentSession } } = await supabase.auth.getSession();
-    if (currentSession) {
-      const code = Math.random().toString(36).substring(2, 8); // 6-char short code
-      // Delete any old codes first, then insert new one
-      await supabase.from('session_transfers').delete().lt('created_at', new Date(Date.now() - 300000).toISOString());
-      await supabase.from('session_transfers').insert({
-        code,
-        access_token: currentSession.access_token,
-        refresh_token: currentSession.refresh_token,
-      });
-      setSessionUrl(`${window.location.origin}/login?code=${code}`);
     }
 
     const { data: activities } = await supabase
@@ -185,14 +166,12 @@ export const Dashboard = () => {
               </div>
 
               {isDesktop ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', background: 'white', padding: '16px', borderRadius: '16px', color: 'var(--text-main)' }}>
-                  <div style={{ background: 'white', padding: '8px', borderRadius: '12px' }}>
-                    <QRCode value={sessionUrl || `${window.location.origin}/auth`} size={100} level="L" />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ fontSize: '16px', margin: '0 0 4px', display: 'flex', alignItems: 'center', gap: '6px' }}><Smartphone size={18} color="var(--primary)" /> Scan to Start</h3>
-                    <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.4 }}>
-                      Scan this QR code with your phone to take your mission on the go!
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', background: 'white', padding: '24px', borderRadius: '16px', color: 'var(--text-main)', border: '1px dashed var(--primary)' }}>
+                  <div style={{ flex: 1, textAlign: 'center' }}>
+                    <Smartphone size={32} color="var(--primary)" style={{ marginBottom: '8px' }} />
+                    <h3 style={{ fontSize: '16px', margin: '0 0 8px' }}>Mobile Required for Missions</h3>
+                    <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>
+                      Log in to the same account from your phone to start the environment cleaning missions.
                     </p>
                   </div>
                 </div>

@@ -77,8 +77,18 @@ export const Landing = () => {
           position: 'relative',
         }}>
           {/* Brand Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', zIndex: 10, marginBottom: '40px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', zIndex: 10, marginBottom: '40px' }}>
             <span style={{ fontSize: '36px', fontWeight: 700, color: 'var(--primary)', letterSpacing: '-0.5px' }}>ecoloop</span>
+            <div className="desktop-only-note" style={{ background: 'rgba(69,123,89,0.1)', color: 'var(--primary)', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, marginTop: '8px', border: '1px dashed var(--primary)' }}>
+              📱 Note: A mobile device is required to scan waste and track locations.
+            </div>
+            <style>
+              {`
+                @media (max-width: 767px) {
+                  .desktop-only-note { display: none !important; }
+                }
+              `}
+            </style>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '40px' }}>
