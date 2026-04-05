@@ -159,6 +159,27 @@ export const Mission = () => {
     );
   };
 
+  // ---- ANDROID NAV BAR TRANSPARENCY ----
+  useEffect(() => {
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (!metaTheme) {
+      metaTheme = document.createElement('meta');
+      metaTheme.setAttribute('name', 'theme-color');
+      document.head.appendChild(metaTheme);
+    }
+    const originalContent = metaTheme.getAttribute('content');
+    
+    if (phase === 'scanning' || phase === 'analyzing') {
+      metaTheme.setAttribute('content', '#000000');
+    } else {
+      metaTheme.setAttribute('content', '#f7faf8'); // default bg-color
+    }
+
+    return () => {
+      if (originalContent) metaTheme?.setAttribute('content', originalContent);
+    };
+  }, [phase]);
+
   // ---- TIMER ----
   useEffect(() => {
     if (phase === 'running') {
@@ -415,10 +436,10 @@ export const Mission = () => {
           )}
           {phase === 'paused' && (
             <>
-              {/* Continue - soft white */}
+              {/* Continue - soft white with primary color */}
               <button onClick={() => setPhase('running')} className="hover-lift" style={{
                 flex: 1, borderRadius: '16px', padding: '14px',
-                background: '#f1f5f1', color: 'var(--text-main)', fontWeight: 600,
+                background: '#f1f5f1', color: 'var(--primary)', fontWeight: 600,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                 border: '1px solid var(--border-color)'
               }}>

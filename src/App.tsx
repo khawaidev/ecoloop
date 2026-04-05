@@ -23,10 +23,12 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Bottom Navigation */}
       <nav style={{
-        position: 'absolute',
+        position: 'fixed',
         bottom: '20px',
         left: '20px',
         right: '20px',
+        maxWidth: '760px',
+        margin: '0 auto',
         background: 'var(--primary)',
         borderRadius: '24px',
         display: 'flex',

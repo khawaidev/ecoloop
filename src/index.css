@@ -26,19 +26,7 @@
   --font-sans: 'Outfit', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #5ca176;
-    --primary-hover: #7db893;
-    --bg-color: #0b140f;
-    --bg-card: #14241a;
-    --bg-card-rgb: 20, 36, 26;
-    --text-main: #e8f0ec;
-    --text-muted: #8ca395;
-    --text-light: #5f7568;
-    --border-color: #233e2d;
-  }
-}
+/* Dark mode explicitly removed to enforce the mild greenish white background globally */
 
 * {
   box-sizing: border-box;
@@ -132,12 +120,12 @@ button {
 
 .mobile-container {
   width: 100%;
-  max-width: 420px;
+  max-width: 100%;
   margin: 0 auto;
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
-  background: transparent;
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
 }

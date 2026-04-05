@@ -97,6 +97,9 @@ export const Onboarding = () => {
       flexDirection: 'column',
       justifyContent: 'space-between',
       minHeight: '100vh',
+      maxWidth: '600px',
+      margin: '0 auto',
+      width: '100%',
       padding: '48px 24px 40px',
     }}>
       {/* Header */}
