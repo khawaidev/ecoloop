@@ -201,7 +201,8 @@ export const Mission = () => {
             if (prev.length > 0) {
               const last = prev[prev.length - 1];
               const dist = haversine(last[0], last[1], newPos[0], newPos[1]);
-              if (dist > 0.002) {
+              // Changed threshold to 0.001 (1 meter) for much higher tracking fidelity
+              if (dist > 0.001) {
                 setTotalDistance((d) => d + dist);
                 return [...prev, newPos];
               }
@@ -410,10 +411,15 @@ export const Mission = () => {
           </div>
         )}
 
-        {/* Distance Overlay */}
+        {/* Distance & Area Overlay */}
         {hasLocationPermission && (
-          <div style={{ position: 'absolute', top: '16px', right: '16px', background: 'white', borderRadius: '12px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, boxShadow: '0 2px 8px rgba(0,0,0,0.1)', zIndex: 1000 }}>
-            📍 {(totalDistance * 1000).toFixed(0)}m
+          <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', gap: '8px', zIndex: 1000 }}>
+            <div style={{ background: 'white', borderRadius: '12px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+              📍 {(totalDistance * 1000).toFixed(0)}m
+            </div>
+            <div style={{ background: 'white', borderRadius: '12px', padding: '8px 14px', fontSize: '13px', fontWeight: 600, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+              <span style={{ marginRight: '4px' }}>🌍</span>{(totalDistance * 10).toFixed(1)} m²
+            </div>
           </div>
         )}
 

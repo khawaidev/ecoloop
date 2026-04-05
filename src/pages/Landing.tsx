@@ -68,28 +68,45 @@ export const Landing = () => {
       {/* Container to restrict max width but center everything nicely */ }
       <div style={{ maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
       
+        {/* Desktop Navbar */}
+        <header className="desktop-navbar" style={{ padding: '40px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <span style={{ fontSize: '32px', fontWeight: 800, color: 'var(--primary)', letterSpacing: '-0.5px' }}>ecoloop</span>
+            <div style={{ background: 'rgba(69,123,89,0.1)', color: 'var(--primary)', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, border: '1px dashed var(--primary)' }}>
+              📱 Note: A mobile device is required to scan waste and track locations.
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <span style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '15px' }}>Our Mission</span>
+            <span style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '15px' }}>How it Works</span>
+            <button onClick={() => navigate('/auth')} className="btn-primary hover-lift" style={{ padding: '12px 24px', borderRadius: '16px', fontSize: '15px' }}>
+              Login to Web
+            </button>
+          </div>
+        </header>
+
         <div style={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          minHeight: '90vh',
-          padding: '100px 24px 60px', // Increased top padding heavily to clear mobile ribbon
+          minHeight: '80vh',
+          padding: '40px 24px 60px',
           position: 'relative',
         }}>
-          {/* Brand Header */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', zIndex: 10, marginBottom: '40px' }}>
+          {/* Mobile Header (Hidden on Desktop) */}
+          <div className="mobile-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', zIndex: 10, marginBottom: '40px' }}>
             <span style={{ fontSize: '36px', fontWeight: 700, color: 'var(--primary)', letterSpacing: '-0.5px' }}>ecoloop</span>
-            <div className="desktop-only-note" style={{ background: 'rgba(69,123,89,0.1)', color: 'var(--primary)', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, marginTop: '8px', border: '1px dashed var(--primary)' }}>
-              📱 Note: A mobile device is required to scan waste and track locations.
-            </div>
-            <style>
-              {`
-                @media (max-width: 767px) {
-                  .desktop-only-note { display: none !important; }
-                }
-              `}
-            </style>
           </div>
+          <style>
+            {`
+              @media (min-width: 768px) {
+                .mobile-header { display: none !important; }
+              }
+              @media (max-width: 767px) {
+                .desktop-navbar { display: none !important; }
+              }
+            `}
+          </style>
 
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '40px' }}>
             {/* Center Image Placeholder */}
