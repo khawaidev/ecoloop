@@ -72,13 +72,16 @@ export const Landing = () => {
             background: radial-gradient(circle, rgba(45,181,80,0.15) 0%, transparent 70%);
             pointer-events: none;
           }
-          .landing-nav { display: none; }
-          .landing-mobile-header { display: flex; }
+          .landing-nav { display: flex; }
+          .hide-on-mobile { display: none !important; }
           @media (min-width: 768px) {
-            .landing-nav { display: flex !important; }
-            .landing-mobile-header { display: none !important; }
+            .hide-on-mobile { display: flex !important; }
+            .hide-on-mobile-inline { display: inline-block !important; }
           }
+          .landing-mobile-header { display: none; }
+          
           .stat-card {
+
             text-align: center;
             padding: 32px 16px;
           }
@@ -122,54 +125,42 @@ export const Landing = () => {
       {/* ===== HERO SECTION (Dark) ===== */}
       <div className="landing-hero" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
-        {/* Desktop Navbar */}
+        {/* Unified Navbar */}
         <header className="landing-nav" style={{
-          padding: '24px 48px',
-          display: 'flex',
-          alignItems: 'center',
+          padding: '24px',
           justifyContent: 'space-between',
+          alignItems: 'center',
           position: 'relative',
           zIndex: 10,
         }}>
           <span style={{ fontSize: '28px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
             eco<span style={{ color: '#2DB550' }}>loop</span>
           </span>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <a href="#mission" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>Our Mission</a>
-            <a href="#approach" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>How it Works</a>
+            <a href="#approach" className="hide-on-mobile" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>How it Works</a>
             <a href="#stats" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>Impact</a>
             <button
               onClick={() => navigate('/auth')}
+              className="hide-on-mobile"
               style={{
                 background: '#2DB550',
                 color: 'white',
-                padding: '12px 28px',
+                padding: '10px 24px',
                 borderRadius: '12px',
                 fontSize: '15px',
                 fontWeight: 700,
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'transform 0.2s, box-shadow 0.2s',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
-              Get Started →
+              Get Started
             </button>
           </nav>
         </header>
-
-        {/* Mobile Header */}
-        <div className="landing-mobile-header" style={{
-          padding: '60px 24px 0',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
-          zIndex: 10,
-          position: 'relative',
-        }}>
-          <span style={{ fontSize: '32px', fontWeight: 800, color: 'white' }}>
-            eco<span style={{ color: '#2DB550' }}>loop</span>
-          </span>
-        </div>
 
         {/* Hero Content */}
         <div style={{
