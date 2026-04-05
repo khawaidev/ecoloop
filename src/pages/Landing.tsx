@@ -1,4 +1,4 @@
-import { ArrowRight, Trash2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import heroImg from '../assets/3444156-removebg-preview.png';
 
@@ -11,7 +11,6 @@ export const Landing = () => {
       flexDirection: 'column',
       justifyContent: 'space-between',
       minHeight: '100vh',
-      minHeight: '100dvh',
       padding: '40px 24px',
       position: 'relative',
       overflow: 'hidden',

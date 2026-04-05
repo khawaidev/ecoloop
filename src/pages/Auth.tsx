@@ -8,8 +8,7 @@ export const Auth = () => {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-end', // Pushes all content to the bottom
-      height: '100vh',           // Fallback
-      height: '100dvh',          // Standard mobile dynamic height
+      height: '100vh',
       position: 'relative',
       overflow: 'hidden'
     }}>

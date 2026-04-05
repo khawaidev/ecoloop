@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { signOut } from '../lib/supabase';
-import { LogOut, MapPin, ChevronRight, Trash2, Award } from 'lucide-react';
+import { LogOut, MapPin, ChevronRight, Award } from 'lucide-react';
 
 export const Profile = () => {
   const { user } = useAuth();

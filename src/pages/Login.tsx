@@ -9,7 +9,6 @@ export const Login = () => {
       flexDirection: 'column',
       justifyContent: 'space-between',
       minHeight: '100vh',
-      minHeight: '100dvh',
       padding: '40px 24px',
       position: 'relative',
       overflow: 'hidden'

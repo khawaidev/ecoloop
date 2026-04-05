@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from 'react';
-import { Camera, X, Check } from 'lucide-react';
+import { useState } from 'react';
+import { X, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 /* Note: In a real app we'd use navigator.mediaDevices.getUserMedia directly or a library like react-webcam. Here we implement a mock verified scanner view. */
@@ -19,7 +19,6 @@ export const CameraView = () => {
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
-      height: '100dvh',
       background: '#000',
       color: 'white',
       position: 'relative'
