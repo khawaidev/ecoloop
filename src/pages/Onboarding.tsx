@@ -81,8 +81,6 @@ export const Onboarding = () => {
 
     setLoading(true);
 
-    const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || '';
-
     const { error } = await supabase
       .from('profiles')
       .upsert({
@@ -90,7 +88,6 @@ export const Onboarding = () => {
         username: username.trim(),
         location: locationCoords,
         location_name: locationName,
-        avatar_url: avatarUrl,
         updated_at: new Date().toISOString(),
       });
 
