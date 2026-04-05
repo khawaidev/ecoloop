@@ -9,4 +9,5 @@ export default defineConfig({
 })
 
 
-git add . && git commit -m "auto update" && git push
+git push --set-upstream origin main
+git push

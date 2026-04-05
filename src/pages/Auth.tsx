@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { signInWithGoogle } from '../lib/supabase';
+import clima from "../assets/group-effort-clean-up-ocean-plastic-perfect-environmental-awareness-campaigns-educational-resources_1254878-44439.jpg";
 
 export const Auth = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
@@ -11,7 +12,7 @@ export const Auth = () => {
   }, []);
 
   const desktopBg = "https://i.ibb.co/5WwbKRPz/man-collecting-plastic-garbage-polluted-park.jpg";
-  const mobileBg = "https://i.ibb.co/5WwbKRPz/man-collecting-plastic-garbage-polluted-park.jpg"; // Using same based on user request
+  const mobileBg = clima; // Using imported local asset for mobile
 
   if (isDesktop) {
     return (
