@@ -367,6 +367,7 @@ export const Mission = () => {
               <button onClick={analyzePhoto} disabled={analyzing} className="btn-primary" style={{ flex: 1, borderRadius: '16px' }}>
                 {analyzing ? <><Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} /> Analyzing...</> : 'Analyze with AI'}
               </button>
+              <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
             </>
           )}
         </div>
