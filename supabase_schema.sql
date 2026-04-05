@@ -50,10 +50,11 @@ create table if not exists public.activities (
 alter table public.activities enable row level security;
 
 drop policy if exists "Users can view own activities." on activities;
+drop policy if exists "Anyone can view activities for leaderboard." on activities;
 drop policy if exists "Users can insert own activities." on activities;
 
-create policy "Users can view own activities."
-  on activities for select using ( auth.uid() = user_id );
+create policy "Anyone can view activities for leaderboard."
+  on activities for select using ( true );
 create policy "Users can insert own activities."
   on activities for insert with check ( auth.uid() = user_id );
 

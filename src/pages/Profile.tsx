@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { signOut } from '../lib/supabase';
-import { LogOut, MapPin, ChevronRight, Award } from 'lucide-react';
+import { LogOut, MapPin } from 'lucide-react';
+import { LevelBadge, getBadgeDetails } from '../components/LevelBadge';
+import { LeaderboardWidget } from '../components/LeaderboardWidget';
 
 export const Profile = () => {
   const { user } = useAuth();
@@ -94,7 +96,7 @@ export const Profile = () => {
           </div>
         )}
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '22px', fontWeight: 700, margin: '0 0 4px' }}>{displayName}</h1>
+          <h1 style={{ fontSize: '22px', fontWeight: 700, margin: '0 0 8px' }}>{displayName} <LevelBadge totalItems={stats.totalItems} /></h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>{email}</p>
         </div>
         {profile?.location_name && (
@@ -123,19 +125,20 @@ export const Profile = () => {
 
       {/* Badges / Achievement */}
       <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <div style={{ width: '48px', height: '48px', borderRadius: '24px', background: 'rgba(69,123,89,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          <Award size={24} color="var(--primary)" />
+        <div style={{ width: '48px', height: '48px', borderRadius: '24px', background: getBadgeDetails(stats.totalItems).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '24px' }}>
+          {getBadgeDetails(stats.totalItems).icon}
         </div>
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: '15px', fontWeight: 600, margin: '0 0 2px' }}>
-            {stats.totalItems >= 50 ? 'Eco Champion 🏆' : stats.totalItems >= 10 ? 'Rising Star ⭐' : 'Getting Started 🌱'}
+          <p style={{ fontSize: '15px', fontWeight: 600, margin: '0 0 2px', color: getBadgeDetails(stats.totalItems).color }}>
+            {getBadgeDetails(stats.totalItems).name}
           </p>
           <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0 }}>
-            {stats.totalItems >= 50 ? 'You\'re making a huge impact!' : stats.totalItems >= 10 ? 'Keep up the great work!' : 'Complete missions to earn badges!'}
+            {stats.totalItems >= 1000 ? 'You are a legend making massive impact!' : stats.totalItems >= 500 ? 'Incredible ecosystem contribution!' : stats.totalItems >= 100 ? 'You are making a huge difference!' : 'Complete missions to level up!'}
           </p>
         </div>
-        <ChevronRight size={20} color="var(--text-muted)" />
       </div>
+
+      <LeaderboardWidget currentUserId={user?.id} />
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />

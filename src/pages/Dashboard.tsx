@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { Award, Recycle, ArrowRight, Smartphone } from 'lucide-react';
+import { LevelBadge } from '../components/LevelBadge';
+import { LeaderboardWidget } from '../components/LeaderboardWidget';
 
 const MISSIONS_POOL = [
   { name: 'Collect 10 Plastic Items', description: 'Head out to your local park or street and pick up discarded plastic wrappers and bottles.', target: 10 },
@@ -129,7 +131,10 @@ export const Dashboard = () => {
           )}
           <div>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>Welcome back!</p>
-            <p style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-main)', margin: 0 }}>{displayName}</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <p style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-main)', margin: 0 }}>{displayName}</p>
+              <LevelBadge totalItems={stats.totalItems} />
+            </div>
           </div>
         </div>
         <Award size={28} color="var(--primary)" />
@@ -258,6 +263,9 @@ export const Dashboard = () => {
               </div>
             </div>
           )}
+
+          {/* Leaderboard */}
+          <LeaderboardWidget currentUserId={user?.id} />
         </div>
       </div>
     </div>

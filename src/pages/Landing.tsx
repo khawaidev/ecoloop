@@ -1,4 +1,4 @@
-import { ArrowRight, Leaf, Camera, MapPin, BarChart3, Shield } from 'lucide-react';
+import { ArrowRight, Leaf, Camera, MapPin, BarChart3, Shield, Map, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import heroImg from '../assets/3444156-removebg-preview.png';
 
@@ -259,26 +259,7 @@ export const Landing = () => {
           </div>
 
           {/* Right: Hero Image */}
-          <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center', position: 'relative' }}>
-            <div style={{
-              position: 'absolute', inset: '-20%',
-              background: 'radial-gradient(circle, rgba(45,181,80,0.2), transparent 70%)',
-              pointerEvents: 'none', borderRadius: '50%',
-            }} />
-            <img
-              src={heroImg}
-              alt="Plastic Cleanup Hero"
-              style={{
-                width: '100%',
-                maxWidth: '420px',
-                objectFit: 'cover',
-                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))',
-                borderRadius: '24px',
-                position: 'relative',
-                zIndex: 1,
-              }}
-            />
-          </div>
+           
         </div>
       </div>
 
@@ -295,16 +276,17 @@ export const Landing = () => {
 
           <div className="approach-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
             {[
-              { step: 'STEP 1', title: 'ASSESS', desc: 'Head outside with your phone. Our GPS-powered tracker maps your cleanup route in real-time, measuring every meter you cover.' },
-              { step: 'STEP 2', title: 'ENGAGE', desc: 'Snap a photo of collected plastic waste. Gemini AI instantly identifies types, counts items, and estimates weight with accuracy.' },
-              { step: 'STEP 3', title: 'ACT', desc: 'View your verified impact report. Track your contribution over time with detailed stats on distance, area, and pollution removed.' },
+              { step: 'STEP 1', title: 'ASSESS', icon: <Map size={48} color="#2DB550" opacity={0.6} />, desc: 'Head outside with your phone. Our GPS-powered tracker maps your cleanup route in real-time, measuring every meter you cover.' },
+              { step: 'STEP 2', title: 'ENGAGE', icon: <Camera size={48} color="#2DB550" opacity={0.6} />, desc: 'Snap a photo of collected plastic waste. Gemini AI instantly identifies types, counts items, and estimates weight with accuracy.' },
+              { step: 'STEP 3', title: 'ACT', icon: <TrendingUp size={48} color="#2DB550" opacity={0.6} />, desc: 'View your verified impact report. Track your contribution over time with detailed stats on distance, area, and pollution removed.' },
             ].map((item, i) => (
               <div key={i} className="approach-card">
                 <div style={{ padding: '6px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ color: '#2DB550', fontSize: '11px', fontWeight: 700, letterSpacing: '1px' }}>{item.step}</span>
                 </div>
-                <div style={{ height: '180px', background: `linear-gradient(135deg, rgba(45,181,80,${0.1 + i * 0.05}), rgba(0,0,0,0.3))`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: '48px', fontWeight: 800, color: 'rgba(255,255,255,0.1)' }}>{item.title}</span>
+                <div style={{ height: '180px', background: `linear-gradient(135deg, rgba(45,181,80,${0.1 + i * 0.05}), rgba(0,0,0,0.3))`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+                  {item.icon}
+                  <span style={{ fontSize: '36px', fontWeight: 800, color: 'rgba(255,255,255,0.7)' }}>{item.title}</span>
                 </div>
                 <div style={{ padding: '24px' }}>
                   <h3 style={{ color: 'white', fontSize: '22px', fontWeight: 700, margin: '0 0 8px' }}>{item.title}</h3>
