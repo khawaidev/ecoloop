@@ -10,6 +10,7 @@ import { Profile } from './pages/Profile';
 import { CameraView } from './pages/CameraView';
 import { Mission } from './pages/Mission';
 import { Results } from './pages/Results';
+import { CoveredAreas } from './pages/CoveredAreas';
 
 // Mobile Layout Component Wrapper
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -42,11 +43,13 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <LayoutDashboard size={20} />
           {location.pathname === '/dashboard' && <span style={{ fontSize: '13px', fontWeight: 600 }}>Home</span>}
         </Link>
-        <Link to="#" style={{ color: 'white', textDecoration: 'none', display: 'flex' }}>
-          <MapIcon size={24} />
+        <Link to="/areas" style={{ background: location.pathname === '/areas' ? 'white' : 'transparent', color: location.pathname === '/areas' ? 'var(--primary)' : 'white', borderRadius: '16px', padding: '8px 16px', display: 'flex', gap: '8px', alignItems: 'center', textDecoration: 'none' }}>
+          <MapIcon size={20} />
+          {location.pathname === '/areas' && <span style={{ fontSize: '13px', fontWeight: 600 }}>Impact</span>}
         </Link>
-        <Link to="/profile" style={{ color: 'white', textDecoration: 'none', display: 'flex' }}>
-          <User size={24} />
+        <Link to="/profile" style={{ background: location.pathname === '/profile' ? 'white' : 'transparent', color: location.pathname === '/profile' ? 'var(--primary)' : 'white', borderRadius: '16px', padding: '8px 16px', display: 'flex', gap: '8px', alignItems: 'center', textDecoration: 'none' }}>
+          <User size={20} />
+          {location.pathname === '/profile' && <span style={{ fontSize: '13px', fontWeight: 600 }}>Profile</span>}
         </Link>
       </nav>
     </div>
@@ -119,6 +122,7 @@ function App() {
             {/* Protected Flows (AppLayout containing bottom nav) */}
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/areas" element={<ProtectedRoute><CoveredAreas /></ProtectedRoute>} />
 
             {/* Full-screen flows without bottom nav */}
             <Route path="/camera" element={<AuthOnlyRoute><CameraView /></AuthOnlyRoute>} />

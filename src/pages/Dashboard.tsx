@@ -23,6 +23,7 @@ export const Dashboard = () => {
   const [mission, setMission] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+  const [sessionUrl, setSessionUrl] = useState('');
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
@@ -51,6 +52,12 @@ export const Dashboard = () => {
       
     if (profileData) {
       setProfile(profileData);
+    }
+
+    // Fetch session tokens for QR auto-login
+    const { data: { session: currentSession } } = await supabase.auth.getSession();
+    if (currentSession) {
+      setSessionUrl(`${window.location.origin}/#access_token=${currentSession.access_token}&refresh_token=${currentSession.refresh_token}&type=recovery`);
     }
 
     const { data: activities } = await supabase
@@ -172,7 +179,7 @@ export const Dashboard = () => {
               {isDesktop ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px', background: 'white', padding: '16px', borderRadius: '16px', color: 'var(--text-main)' }}>
                   <div style={{ background: 'white', padding: '8px', borderRadius: '12px' }}>
-                    <QRCode value={`${window.location.origin}/auth`} size={100} level="M" />
+                    <QRCode value={sessionUrl || `${window.location.origin}/auth`} size={100} level="L" />
                   </div>
                   <div style={{ flex: 1 }}>
                     <h3 style={{ fontSize: '16px', margin: '0 0 4px', display: 'flex', alignItems: 'center', gap: '6px' }}><Smartphone size={18} color="var(--primary)" /> Scan to Start</h3>
