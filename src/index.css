@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* TreeSnap Aesthetic Colors */
-  --primary: #457B59;
-  --primary-hover: #376146;
-  --bg-color: #f7faf8;
+  /* Vibrant Green Theme */
+  --primary: #2DB550;
+  --primary-hover: #249944;
+  --primary-glow: rgba(45, 181, 80, 0.3);
+  --bg-color: #f5f8f6;
   --bg-card: #ffffff;
   --bg-card-rgb: 255, 255, 255;
   --text-main: #1a2a22;
@@ -12,9 +13,9 @@
   --text-light: #a9bbb1;
   --border-color: #dbe5e0;
   
-  --shadow-sm: 0 2px 4px rgba(69, 123, 89, 0.05);
-  --shadow-md: 0 8px 16px -4px rgba(69, 123, 89, 0.1);
-  --shadow-lg: 0 12px 24px -8px rgba(69, 123, 89, 0.15);
+  --shadow-sm: 0 2px 4px rgba(45, 181, 80, 0.05);
+  --shadow-md: 0 8px 16px -4px rgba(45, 181, 80, 0.1);
+  --shadow-lg: 0 12px 24px -8px rgba(45, 181, 80, 0.15);
   
   --radius-md: 0.75rem;
   --radius-lg: 1.5rem;

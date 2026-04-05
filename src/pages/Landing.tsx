@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Leaf, Camera, MapPin, BarChart3, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import heroImg from '../assets/3444156-removebg-preview.png';
 
@@ -6,14 +6,7 @@ export const Landing = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-      background: 'var(--bg-color)',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
+    <div style={{ width: '100%', overflowX: 'hidden' }}>
       <style>
         {`
           .corner-ribbon {
@@ -21,32 +14,30 @@ export const Landing = () => {
             top: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(90deg, #2b4d37, var(--primary), #2b4d37);
+            background: linear-gradient(90deg, #1a1a1a, #2DB550, #1a1a1a);
             color: white;
-            padding: 12px 0;
+            padding: 10px 0;
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             overflow: hidden;
             white-space: nowrap;
             display: flex;
           }
-          
           @media (min-width: 768px) {
             .corner-ribbon {
               top: 50px;
               left: -120px;
               width: 500px;
-              padding: 16px 0;
-              font-size: 16px;
+              padding: 14px 0;
+              font-size: 14px;
               transform: rotate(-45deg);
-              box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+              box-shadow: 0 8px 30px rgba(0,0,0,0.5);
             }
           }
-
           .corner-ribbon-content {
             display: inline-block;
             white-space: nowrap;
@@ -55,6 +46,68 @@ export const Landing = () => {
           @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
+          }
+          .landing-hero {
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+          }
+          .landing-hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(45,181,80,0.25) 0%, transparent 70%);
+            pointer-events: none;
+          }
+          .landing-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(45,181,80,0.15) 0%, transparent 70%);
+            pointer-events: none;
+          }
+          .landing-nav { display: none; }
+          .landing-mobile-header { display: flex; }
+          @media (min-width: 768px) {
+            .landing-nav { display: flex !important; }
+            .landing-mobile-header { display: none !important; }
+          }
+          .stat-card {
+            text-align: center;
+            padding: 32px 16px;
+          }
+          .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: #2DB550;
+            line-height: 1;
+          }
+          @media (max-width: 767px) {
+            .stat-number { font-size: 36px; }
+            .approach-grid { grid-template-columns: 1fr !important; }
+          }
+          .approach-card {
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+          .approach-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(45,181,80,0.15);
+          }
+          .quote-section {
+            background: #f5f8f6;
+            padding: 80px 24px;
+          }
+          @media (max-width: 767px) {
+            .quote-section { padding: 48px 16px; }
           }
         `}
       </style>
@@ -65,115 +118,282 @@ export const Landing = () => {
           HACKATHON The Climate Change-Makers Challenge: 2026 BY One4Earth &nbsp;&nbsp;&nbsp; HACKATHON The Climate Change-Makers Challenge: 2026 BY One4Earth
         </div>
       </div>
-      {/* Container to restrict max width but center everything nicely */ }
-      <div style={{ maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
-      
+
+      {/* ===== HERO SECTION (Dark) ===== */}
+      <div className="landing-hero" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+
         {/* Desktop Navbar */}
-        <header className="desktop-navbar" style={{ padding: '40px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <span style={{ fontSize: '32px', fontWeight: 800, color: 'var(--primary)', letterSpacing: '-0.5px' }}>ecoloop</span>
-            <div style={{ background: 'rgba(69,123,89,0.1)', color: 'var(--primary)', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, border: '1px dashed var(--primary)' }}>
-              📱 Note: A mobile device is required to scan waste and track locations.
-            </div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-            <span style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '15px' }}>Our Mission</span>
-            <span style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '15px' }}>How it Works</span>
-            <button onClick={() => navigate('/auth')} className="btn-primary hover-lift" style={{ padding: '12px 24px', borderRadius: '16px', fontSize: '15px' }}>
-              Login to Web
+        <header className="landing-nav" style={{
+          padding: '24px 48px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          position: 'relative',
+          zIndex: 10,
+        }}>
+          <span style={{ fontSize: '28px', fontWeight: 800, color: 'white', letterSpacing: '-0.5px' }}>
+            eco<span style={{ color: '#2DB550' }}>loop</span>
+          </span>
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <a href="#mission" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>Our Mission</a>
+            <a href="#approach" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>How it Works</a>
+            <a href="#stats" style={{ color: '#ccc', fontWeight: 500, fontSize: '15px', textDecoration: 'none', transition: 'color 0.2s' }}>Impact</a>
+            <button
+              onClick={() => navigate('/auth')}
+              style={{
+                background: '#2DB550',
+                color: 'white',
+                padding: '12px 28px',
+                borderRadius: '12px',
+                fontSize: '15px',
+                fontWeight: 700,
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+              }}
+            >
+              Get Started →
             </button>
-          </div>
+          </nav>
         </header>
 
-        <div style={{
-          display: 'flex',
+        {/* Mobile Header */}
+        <div className="landing-mobile-header" style={{
+          padding: '60px 24px 0',
           flexDirection: 'column',
-          justifyContent: 'center',
-          minHeight: '80vh',
-          padding: '40px 24px 60px',
+          alignItems: 'center',
+          gap: '8px',
+          zIndex: 10,
           position: 'relative',
         }}>
-          {/* Mobile Header (Hidden on Desktop) */}
-          <div className="mobile-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', zIndex: 10, marginBottom: '40px' }}>
-            <span style={{ fontSize: '36px', fontWeight: 700, color: 'var(--primary)', letterSpacing: '-0.5px' }}>ecoloop</span>
-          </div>
-          <style>
-            {`
-              @media (min-width: 768px) {
-                .mobile-header { display: none !important; }
-              }
-              @media (max-width: 767px) {
-                .desktop-navbar { display: none !important; }
-              }
-            `}
-          </style>
+          <span style={{ fontSize: '32px', fontWeight: 800, color: 'white' }}>
+            eco<span style={{ color: '#2DB550' }}>loop</span>
+          </span>
+        </div>
 
-          <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '40px' }}>
-            {/* Center Image Placeholder */}
-            <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center' }}>
-              <img
-                src={heroImg}
-                alt="Plastic Cleanup"
-                style={{
-                  width: '100%',
-                  maxWidth: '400px',
-                  objectFit: 'cover',
-                  filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))',
-                  borderRadius: 'var(--radius-xl)'
-                }}
-              />
+        {/* Hero Content */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '48px',
+          padding: '40px 48px 80px',
+          maxWidth: '1200px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 2,
+        }}>
+          {/* Left: Text */}
+          <div style={{ flex: '1 1 400px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: 'rgba(45,181,80,0.15)',
+              color: '#2DB550',
+              padding: '6px 16px',
+              borderRadius: '20px',
+              fontSize: '13px',
+              fontWeight: 600,
+              alignSelf: 'flex-start',
+              border: '1px solid rgba(45,181,80,0.3)',
+            }}>
+              <Leaf size={14} /> AI-Powered Climate Action
             </div>
 
-            {/* Bottom/Right Content */}
-            <div style={{ flex: '1 1 300px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <div>
-                <h1 style={{ fontSize: '48px', fontWeight: 800, lineHeight: 1.1, margin: '0 0 16px', letterSpacing: '-1px' }}>
-                  Verified <span style={{ color: 'var(--primary)' }}>Climate</span> Action using <span style={{ color: 'var(--primary)' }}>AI</span>
-                </h1>
-                <p style={{ color: 'var(--text-muted)', fontSize: '18px', maxWidth: '420px', margin: '0 auto', lineHeight: 1.6 }}>
-                  Stop scrolling and start acting. Track your plastic cleanup, verify your impact instantly with Gemini AI, and find local disposal zones.
-                </p>
-              </div>
+            <h1 style={{
+              fontSize: 'clamp(36px, 5vw, 64px)',
+              fontWeight: 800,
+              color: 'white',
+              lineHeight: 1.05,
+              letterSpacing: '-2px',
+              margin: 0,
+            }}>
+              <span style={{ color: '#2DB550' }}>EMPOWERING</span> RESILIENT FUTURE & TRANSFORMING COMPLEX PROBLEMS INTO{' '}
+              <span style={{ color: '#2DB550' }}>CLIMATE ACTION.</span>
+            </h1>
 
+            <p style={{ color: '#999', fontSize: '17px', lineHeight: 1.7, maxWidth: '500px' }}>
+              Track your plastic cleanup, verify your impact instantly with Gemini AI, and turn everyday litter collection into measurable environmental change.
+            </p>
+
+            {/* Icon Badges Row */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+              {[
+                { icon: <Camera size={16} />, label: 'AI Scan' },
+                { icon: <MapPin size={16} />, label: 'GPS Track' },
+                { icon: <BarChart3 size={16} />, label: 'Analytics' },
+                { icon: <Shield size={16} />, label: 'Verified' },
+              ].map((b, i) => (
+                <div key={i} style={{
+                  display: 'flex', alignItems: 'center', gap: '6px',
+                  background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)',
+                  padding: '8px 16px', borderRadius: '24px', color: '#ccc', fontSize: '13px', fontWeight: 500,
+                }}>
+                  {b.icon} {b.label}
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <button
                 onClick={() => navigate('/auth')}
-                className="btn-primary hover-lift"
-                style={{ width: '100%', padding: '20px', borderRadius: '24px', alignSelf: 'center', maxWidth: '300px', fontSize: '18px' }}
+                className="hover-lift"
+                style={{
+                  background: '#2DB550',
+                  color: 'white',
+                  padding: '18px 36px',
+                  borderRadius: '16px',
+                  fontSize: '17px',
+                  fontWeight: 700,
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
               >
-                Get Started
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid white', borderRadius: '50%', padding: '2px' }}>
-                  <ArrowRight size={20} />
-                </div>
+                Get Started <ArrowRight size={20} />
               </button>
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                color: '#888', fontSize: '13px', fontWeight: 500,
+              }}>
+                📱 Mobile required for missions
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Hero Image */}
+          <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+            <div style={{
+              position: 'absolute', inset: '-20%',
+              background: 'radial-gradient(circle, rgba(45,181,80,0.2), transparent 70%)',
+              pointerEvents: 'none', borderRadius: '50%',
+            }} />
+            <img
+              src={heroImg}
+              alt="Plastic Cleanup Hero"
+              style={{
+                width: '100%',
+                maxWidth: '420px',
+                objectFit: 'cover',
+                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))',
+                borderRadius: '24px',
+                position: 'relative',
+                zIndex: 1,
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ===== APPROACH SECTION ===== */}
+      <div id="approach" style={{ background: '#111', padding: '80px 24px', position: 'relative' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '16px', marginBottom: '48px' }}>
+            <div>
+              <h2 style={{ fontSize: '32px', fontWeight: 700, color: 'white', margin: '0 0 8px' }}>Our Approach to Climate Challenges</h2>
+              <p style={{ color: '#888', fontSize: '15px', maxWidth: '500px' }}>Simple, powerful, and AI-verified cleanup missions.</p>
+            </div>
+            <span style={{ color: '#2DB550', fontSize: '14px', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>// ECOLOOP ACTIONS 2026</span>
+          </div>
+
+          <div className="approach-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+            {[
+              { step: 'STEP 1', title: 'ASSESS', desc: 'Head outside with your phone. Our GPS-powered tracker maps your cleanup route in real-time, measuring every meter you cover.' },
+              { step: 'STEP 2', title: 'ENGAGE', desc: 'Snap a photo of collected plastic waste. Gemini AI instantly identifies types, counts items, and estimates weight with accuracy.' },
+              { step: 'STEP 3', title: 'ACT', desc: 'View your verified impact report. Track your contribution over time with detailed stats on distance, area, and pollution removed.' },
+            ].map((item, i) => (
+              <div key={i} className="approach-card">
+                <div style={{ padding: '6px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#2DB550', fontSize: '11px', fontWeight: 700, letterSpacing: '1px' }}>{item.step}</span>
+                </div>
+                <div style={{ height: '180px', background: `linear-gradient(135deg, rgba(45,181,80,${0.1 + i * 0.05}), rgba(0,0,0,0.3))`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: '48px', fontWeight: 800, color: 'rgba(255,255,255,0.1)' }}>{item.title}</span>
+                </div>
+                <div style={{ padding: '24px' }}>
+                  <h3 style={{ color: 'white', fontSize: '22px', fontWeight: 700, margin: '0 0 8px' }}>{item.title}</h3>
+                  <p style={{ color: '#999', fontSize: '14px', lineHeight: 1.6 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ===== STATS SECTION ===== */}
+      <div id="stats" style={{ background: '#0a0a0a', padding: '60px 24px', borderTop: '1px solid #222', borderBottom: '1px solid #222' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px' }}>
+          {[
+            { number: '100+', label: 'CLEANUP MISSIONS', sub: 'Active worldwide' },
+            { number: 'AI', label: 'GEMINI POWERED', sub: 'Instant verification' },
+            { number: '97%', label: 'ACCURACY', sub: 'Waste identification' },
+          ].map((s, i) => (
+            <div key={i} className="stat-card">
+              <p className="stat-number">{s.number}</p>
+              <p style={{ color: 'white', fontWeight: 700, fontSize: '14px', letterSpacing: '1px', margin: '8px 0 4px' }}>{s.label}</p>
+              <p style={{ color: '#666', fontSize: '13px' }}>{s.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== MISSION SECTION (Light) ===== */}
+      <div id="mission" className="quote-section">
+        <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: 'clamp(28px, 4vw, 48px)',
+            fontWeight: 800,
+            lineHeight: 1.15,
+            color: '#1a2a22',
+            letterSpacing: '-1px',
+            margin: '0 0 24px',
+          }}>
+            "ECOLOOP'S <span style={{ color: '#2DB550', textDecoration: 'underline', textDecorationColor: '#2DB550', textUnderlineOffset: '6px' }}>INNOVATIVE SOLUTIONS</span> HAVE TRANSFORMED OUR APPROACH TO CLIMATE RESILIENCE, MAKING A{' '}
+            <span style={{ color: '#2DB550', textDecoration: 'underline', textDecorationColor: '#2DB550', textUnderlineOffset: '6px' }}>TANGIBLE IMPACT</span> IN OUR COMMUNITY."
+          </h2>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginTop: '32px' }}>
+            <div style={{ width: '42px', height: '42px', borderRadius: '21px', background: '#2DB550', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '18px' }}>
+              E
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <p style={{ fontWeight: 700, fontSize: '15px', margin: 0, color: '#1a2a22' }}>Ecoloop Team</p>
+              <p style={{ fontSize: '13px', color: '#888', margin: 0 }}>Climate Change-Makers 2026</p>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Scrollable Information Section */}
-        <div style={{ padding: '60px 24px', background: 'white', borderTopLeftRadius: '40px', borderTopRightRadius: '40px', boxShadow: '0 -10px 40px rgba(0,0,0,0.02)' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '32px', color: 'var(--text-main)', marginBottom: '16px' }}>Our Mission</h2>
-            <p style={{ fontSize: '18px', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto', lineHeight: 1.8 }}>
-              Ecoloop bridges the gap between environmental good intentions and verifiable action. By turning everyday litter collection into a measurable, AI-verified mission, we empower individuals to take immediate action.
-            </p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '900px', margin: '0 auto' }}>
-             <div style={{ padding: '32px', background: 'var(--bg-color)', borderRadius: '24px', textAlign: 'center' }}>
-               <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>1. Snap & Go</h3>
-               <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>Head outside, locate discarded plastics, and capture them through our high-speed camera view.</p>
-             </div>
-             <div style={{ padding: '32px', background: 'var(--bg-color)', borderRadius: '24px', textAlign: 'center' }}>
-               <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>2. AI Verification</h3>
-               <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>Our Gemini-powered system traces, catalogues, and estimates the exact materials you're removing from the environment.</p>
-             </div>
-             <div style={{ padding: '32px', background: 'var(--bg-color)', borderRadius: '24px', textAlign: 'center' }}>
-               <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>3. Real Impact</h3>
-               <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>Watch your stats grow as you reduce local pollution. Level up your profile and earn achievements.</p>
-             </div>
-          </div>
+      {/* ===== FOOTER ===== */}
+      <div style={{ background: '#0a0a0a', padding: '48px 24px 32px', textAlign: 'center' }}>
+        <p style={{ fontSize: 'clamp(48px, 8vw, 120px)', fontWeight: 800, color: '#1a1a1a', letterSpacing: '-3px', margin: '0 0 24px', lineHeight: 1, WebkitTextStroke: '1px #333' }}>
+          ecoloop
+        </p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '24px', flexWrap: 'wrap' }}>
+          <span style={{ color: '#666', fontSize: '13px' }}>© 2026 Ecoloop</span>
+          <span style={{ color: '#666', fontSize: '13px' }}>One4Earth Hackathon</span>
+          <span style={{ color: '#666', fontSize: '13px' }}>Climate Change-Makers</span>
         </div>
-
+        <button
+          onClick={() => navigate('/auth')}
+          className="hover-lift"
+          style={{
+            background: '#2DB550',
+            color: 'white',
+            padding: '14px 32px',
+            borderRadius: '14px',
+            fontSize: '15px',
+            fontWeight: 700,
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          Start Making Impact →
+        </button>
       </div>
     </div>
   );
