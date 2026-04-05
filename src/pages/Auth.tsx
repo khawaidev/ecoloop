@@ -64,10 +64,10 @@ export const Auth = () => {
     <div style={{
       display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100vh', position: 'relative', overflow: 'hidden'
     }}>
-      <img src={mobileBg} alt="Ecoloop Background" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -2 }} />
-      <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '60%', background: 'linear-gradient(to top, var(--bg-card) 25%, transparent)', zIndex: -1 }}></div>
+      <img src={mobileBg} alt="Ecoloop Background" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '60%', background: 'linear-gradient(to top, var(--bg-card) 25%, transparent)', zIndex: 2 }}></div>
 
-      <div style={{ padding: '0 24px 48px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px', zIndex: 10, width: '100%' }}>
+      <div style={{ padding: '0 24px 48px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px', zIndex: 10, width: '100%', position: 'relative' }}>
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <h1 style={{ fontSize: '36px', fontWeight: 700, margin: 0, color: 'var(--text-main)' }}>Join <span style={{ color: 'var(--primary)' }}>ecoloop</span></h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '16px', fontWeight: 500, margin: 0 }}>Let's clean up the world together.</p>

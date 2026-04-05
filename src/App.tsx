@@ -78,7 +78,7 @@ const RootGuard = ({ children }: { children: React.ReactNode }) => {
   // Once loading finishes AND user is authenticated AND they're on a public page → send to onboarding
   React.useEffect(() => {
     if (!isLoading && session && (hasOAuthHash || location.pathname === '/' || location.pathname === '/auth')) {
-      navigate('/onboarding', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [isLoading, session, hasOAuthHash, location.pathname, navigate]);
 

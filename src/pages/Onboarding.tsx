@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
@@ -34,6 +34,18 @@ export const Onboarding = () => {
   const [locationCoords, setLocationCoords] = useState('');
   const [locationName, setLocationName] = useState('');
   const [locationVerified, setLocationVerified] = useState(false);
+
+  // Check if profile already exists to prevent duplicate onboarding
+  useEffect(() => {
+    if (!user) return;
+    const checkProfile = async () => {
+      const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
+      if (data) {
+        navigate('/dashboard', { replace: true });
+      }
+    };
+    checkProfile();
+  }, [user, navigate]);
 
   const canContinue = username.trim().length > 0 && locationVerified;
 

@@ -25,8 +25,11 @@ export const Profile = () => {
       .from('profiles')
       .select('*')
       .eq('id', user.id)
-      .single();
-    setProfile(profileData);
+      .maybeSingle();
+      
+    if (profileData) {
+      setProfile(profileData);
+    }
 
     const { data: activities } = await supabase
       .from('activities')
@@ -76,11 +79,17 @@ export const Profile = () => {
 
       {/* Profile Header */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', paddingTop: '16px' }}>
-        <img
-          src={avatarUrl}
-          alt="Avatar"
-          style={{ width: '80px', height: '80px', borderRadius: '40px', objectFit: 'cover', border: '3px solid var(--primary)', background: 'var(--border-color)' }}
-        />
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            style={{ width: '80px', height: '80px', borderRadius: '40px', objectFit: 'cover', border: '3px solid var(--primary)', background: 'var(--border-color)' }}
+          />
+        ) : (
+          <div style={{ width: '80px', height: '80px', borderRadius: '40px', border: '3px solid var(--primary)', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontWeight: 'bold' }}>
+            {(user?.email || 'U').charAt(0).toUpperCase()}
+          </div>
+        )}
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '22px', fontWeight: 700, margin: '0 0 4px' }}>{displayName}</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0 }}>{email}</p>

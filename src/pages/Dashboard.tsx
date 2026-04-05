@@ -40,8 +40,16 @@ export const Dashboard = () => {
       .from('profiles')
       .select('*')
       .eq('id', user.id)
-      .single();
-    setProfile(profileData);
+      .maybeSingle();
+      
+    if (!profileData) {
+      navigate('/onboarding', { replace: true });
+      return;
+    }
+      
+    if (profileData) {
+      setProfile(profileData);
+    }
 
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
@@ -107,11 +115,17 @@ export const Dashboard = () => {
       {/* Header Profile Area */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <img
-            src={avatarUrl}
-            alt="Profile"
-            style={{ width: '48px', height: '48px', borderRadius: '24px', objectFit: 'cover', background: 'var(--border-color)' }}
-          />
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt="Profile"
+              style={{ width: '48px', height: '48px', borderRadius: '24px', objectFit: 'cover', background: 'var(--border-color)' }}
+            />
+          ) : (
+            <div style={{ width: '48px', height: '48px', borderRadius: '24px', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', fontWeight: 'bold' }}>
+              {(user?.email || 'U').charAt(0).toUpperCase()}
+            </div>
+          )}
           <div>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>Welcome back!</p>
             <p style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-main)', margin: 0 }}>{displayName}</p>
